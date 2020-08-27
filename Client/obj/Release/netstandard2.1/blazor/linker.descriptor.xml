@@ -1,0 +1,5 @@
+﻿<linker>
+  <assembly fullname="TeleApp.Client">
+    <type fullname="*" required="true" />
+  </assembly>
+</linker>

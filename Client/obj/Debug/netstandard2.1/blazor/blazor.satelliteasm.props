@@ -1,0 +1,4 @@
+﻿<SatelliteAssembly>
+  <Assembly Name="C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Debug\netstandard2.1\en\TeleApp.Shared.resources.dll" Culture="en" DestinationSubDirectory="en\" />
+  <Assembly Name="C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Debug\netstandard2.1\vi\TeleApp.Shared.resources.dll" Culture="vi" DestinationSubDirectory="vi\" />
+</SatelliteAssembly>

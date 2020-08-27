@@ -1,0 +1,18 @@
+﻿@page "/a"
+
+<h3>Trang chủ</h3>
+
+@code {
+    public bool IsWindowVisible { get; set; } = true;
+
+    public TelerikAnimationContainer AnimationContainer { get; set; }
+
+    public async void Show(MouseEventArgs args)
+    {
+        await AnimationContainer.ShowAsync();
+
+        await Task.Delay(6000);
+
+        await AnimationContainer.HideAsync();
+    }
+}

@@ -1,0 +1,359 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body, app, .main {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.top-row {
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+    .main .top-row {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #d6d5d5;
+        justify-content: flex-end;
+    }
+
+        .main .top-row > a, .main .top-row .btn-link {
+            white-space: nowrap;
+            margin-left: 1.5rem;
+        }
+
+        .main .top-row a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+.content {
+    padding-top: 1.1rem;
+    flex: auto;
+    overflow-y: auto;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+.k-grid-pager {
+    display: none !important;
+}
+
+.k-grid {
+    font-size: 12px !important;
+}
+.spancallin {
+    color: #000000;
+}
+.spancallout {
+    color: blue;
+}
+.spancallmiss {
+    color: red;
+}
+#BoxTimTheoSDTLogfile {
+    margin-left: unset !important;
+    margin-top: 22px !important;
+    margin-bottom: 10px !important;
+    height: 1.9rem !important;
+}
+span.k-input {
+    height: 25px !important;
+}
+span.k-dropdown {
+    top: 6px !important;
+}
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 999;
+    top: 40%;
+    left: 50%;
+}
+.k-combobox .k-dropdown-wrap {
+    height: 30px !important;
+}
+.k-combobox .k-dropdown-wrap .k-input {
+    padding: 0rem .75rem !important;
+    height: 25px !important;
+}
+.k-combobox {
+    top: 6px !important;
+}
+.k-combobox .k-dropdown-wrap .k-clear-value {
+    top: 0.175rem !important;
+}
+.k-dateinput .k-dateinput-wrap .k-input {
+    padding: 0rem .75rem !important;
+    height: 28px !important;
+}
+span.k-daterangepicker-wrap {
+    margin-top: -6px !important;
+}
+span.k-today {
+    text-indent: -9999px;
+    line-height: 0;
+}
+
+span.k-today:after {
+    content: "Hôm nay";
+    text-indent: 0;
+    display: block;
+    line-height: initial;
+}
+/*span.loadingtrang {
+    display: table;
+    margin: auto;
+}
+div.loadtrang {
+    position: absolute;
+    top: 30vh;
+    width: 100%;
+    text-align: center;
+}
+.fas .fa-spin {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}*/
+/*.wrapper {
+    width: 200px;
+    height: 60px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}*/
+
+/*.circle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #fff;
+    left: 15%;
+    transform-origin: 50%;
+    animation: circle .5s alternate infinite ease;
+    background: radial-gradient(#9b59b6, #8e44ad);
+}
+
+@keyframes circle {
+    0% {
+        top: 60px;
+        height: 5px;
+        border-radius: 50px 50px 25px 25px;
+        transform: scaleX(1.7);
+    }
+
+    40% {
+        height: 20px;
+        border-radius: 50%;
+        transform: scaleX(1);
+    }
+
+    100% {
+        top: 0%;
+    }
+}
+
+.circle:nth-child(2) {
+    left: 45%;
+    animation-delay: .2s;
+}
+
+.circle:nth-child(3) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+}
+
+.shadow {
+    width: 20px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.5);
+    position: absolute;
+    top: 62px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 15%;
+    filter: blur(1px);
+    animation: shadow .5s alternate infinite ease;
+    background: radial-gradient(#9b59b6, #8e44ad);
+}
+
+@keyframes shadow {
+    0% {
+        transform: scaleX(1.5);
+    }
+
+    40% {
+        transform: scaleX(1);
+        opacity: .7;
+    }
+
+    100% {
+        transform: scaleX(.2);
+        opacity: .4;
+    }
+}
+
+.shadow:nth-child(4) {
+    left: 45%;
+    animation-delay: .2s
+}
+
+.shadow:nth-child(5) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+}*/
+
+/*.wrapper span {
+    position: absolute;
+    top: 75px;
+    font-family: 'Lato';
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: #fff;
+    left: 18%;
+    color: #9b59b6;
+    display: table;
+    margin: auto;
+}*/
+.spinner {
+    margin: 0 auto;
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(40% + 50px);
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 16px;
+}
+.spinner span {
+    color: #2980b9;
+    /*margin: 0 auto;*/
+    /*position: absolute;*/
+    /*top: calc(50% - 50px);
+    left: calc(50% - 50px);*/
+}
+
+    .spinner > div {
+        background-color: #2980b9;
+        height: 100%;
+        width: 10px;
+        display: inline-block;
+        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    }
+
+    .spinner .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+    }
+
+    .spinner .rect3 {
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+    }
+
+    .spinner .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+
+    .spinner .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+    }
+
+@-webkit-keyframes sk-stretchdelay {
+    0%, 40%, 100% {
+        -webkit-transform: scaleY(0.4)
+    }
+
+    20% {
+        -webkit-transform: scaleY(1.0)
+    }
+}
+
+@keyframes sk-stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }
+
+    20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
+}

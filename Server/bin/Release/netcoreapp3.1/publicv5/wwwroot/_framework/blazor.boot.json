@@ -1,0 +1,71 @@
+{
+  "cacheBootResources": true,
+  "config": [ ],
+  "debugBuild": false,
+  "entryAssembly": "TeleApp.Client",
+  "linkerEnabled": true,
+  "resources": {
+    "assembly": {
+      "Faso.Blazor.SpinKit.dll": "sha256-rbfN64MgtORKC9buskOWDZzvGq9NjftjeIQRK4\/NsHc=",
+      "Microsoft.AspNetCore.Components.dll": "sha256-b5d2DkhfhaLTWUYH2O6CM+UnTeygXSg+2LQm\/oSze40=",
+      "Microsoft.AspNetCore.Components.Forms.dll": "sha256-KZqWlDkjjIm1FEMPpU8\/nODWHXy\/2KRef17kwBptmw8=",
+      "Microsoft.AspNetCore.Components.Web.dll": "sha256-a10p4sMbc7lZT+l3G45nNi2e\/WHf7m+C7TS0HaxHsAA=",
+      "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-uBG25hc6dAWWNTHkGNfjTlBQAMhum9lgcvYgsHyEKSA=",
+      "Microsoft.Bcl.AsyncInterfaces.dll": "sha256-jzHgXWAvWMkKIGFjZoT84tbe72E+H7CvTr\/Dryh4QPs=",
+      "Microsoft.CSharp.dll": "sha256-gqM1Qn4NsSIh4o6y7TjuP3FVBuCMIHocBcOflsr++Z4=",
+      "Microsoft.Extensions.Configuration.Abstractions.dll": "sha256-MB2V8clrwfKyrxU3uCIOHS6xGpssHxLre47oRvZdTBI=",
+      "Microsoft.Extensions.Configuration.dll": "sha256-ZwMB72lL2+6Jw3Ta30ll4SPc5DraQpD2o3EfIOaaLjo=",
+      "Microsoft.Extensions.Configuration.Json.dll": "sha256-7OPoiRaK\/JRUtj+T7\/Z2VTXB7SddrHjWEfy9e93qRVk=",
+      "Microsoft.Extensions.DependencyInjection.Abstractions.dll": "sha256-bjP5lRYsgd2GAOhY6Dzq1U3B6C6KbbZeRHWCR3WgrAE=",
+      "Microsoft.Extensions.DependencyInjection.dll": "sha256-ljMxiAS0DlFGKMq5+f\/Kv3H4Jx875XwTuT0ypXp0Eiw=",
+      "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-rkyqJnZ\/f19ccrltWTwjCH95\/gbuuwm5wknebE39+LQ=",
+      "Microsoft.Extensions.Logging.dll": "sha256-9GGbIvse+ntREY0Z+qoZ7pz61KIgcxduz5JpYWunv4U=",
+      "Microsoft.Extensions.Options.dll": "sha256-enRFy8NylA5blyOWAj6z4tamCir+l9HXGqqVoyIA3sg=",
+      "Microsoft.Extensions.Primitives.dll": "sha256-UY++KTXZNdslQ4FKSfovKBqrSinNyKFhtx2KuvXqDdU=",
+      "Microsoft.JSInterop.dll": "sha256-3cbvJEo8k8VJVQwyEZWWQ6yGRFQW8\/219DaOnmsX3e4=",
+      "Microsoft.JSInterop.WebAssembly.dll": "sha256-zV\/OfJNfNsG404X30Pwkdymdh1KmZpTVEmG\/JNFVc\/k=",
+      "Mono.Security.dll": "sha256-lB2ga3VicErLtDCWv5TUCeDVPypTaAlbVCqwlEwvK1Y=",
+      "mscorlib.dll": "sha256-hGXL4EOkiHztf76Kcq74sGOgbhmOnFvgMx85ENaBiw8=",
+      "Newtonsoft.Json.dll": "sha256-8+aWlQshkso8ei8xp5J0gn4ZNGRYRMqXzI+osKzgVYI=",
+      "System.ComponentModel.DataAnnotations.dll": "sha256-wYJP8btIvH\/oCrXh20n+f+LZNv08hZFv7LgGvKDTIks=",
+      "System.Core.dll": "sha256-JN6iq26n4U5ddQdJEURDz5\/rY4wjER\/XFY46Sl9R\/TM=",
+      "System.Data.dll": "sha256-AaM5ZUq1NBeqMkyeTpVsjnkpQr7rSf9v2IopBUaGmlM=",
+      "System.dll": "sha256-LqBEjk1qz2hZ3BteCQC93d66jT2mSPLrCHnhRGjVJcg=",
+      "System.Net.Http.dll": "sha256-khhhOgmcWrGs5F93nLFX4d2lnUbYTRohnAxKQ0NGybk=",
+      "System.Net.Http.Json.dll": "sha256-i35j+YWNInpPnWRci74mGMb99CjDxFyFNKp9yEO\/SaQ=",
+      "System.Net.Http.WebAssemblyHttpHandler.dll": "sha256-I+iYkQxGljx2\/YGn6B+fyVC4x9zG9oFLiBfWsoijp7k=",
+      "System.Numerics.dll": "sha256-Mr2jU607AB+GKAiRxfSQ2fXN3qsf6dJLpKgPIQzYYeQ=",
+      "System.Runtime.CompilerServices.Unsafe.dll": "sha256-Z9Gokdw91Vv2EqY2G7AM0D39zcpg2dPbOzy5XB+TLSs=",
+      "System.Runtime.Loader.dll": "sha256-MKSPD7vVJ22W4bA4D4JhMpQWb\/9XJpCVI5Ev96BhXOw=",
+      "System.Runtime.Serialization.dll": "sha256-jeI4M75kD9g\/HCwv\/tK4KKOQt0pQXmANdYetwmCuGSE=",
+      "System.Text.Encodings.Web.dll": "sha256-kY+mD2xuCBzsOWcAaIxbr2BkCTc\/W6mseVMhG5qY5sc=",
+      "System.Text.Json.dll": "sha256-6pFk5IfEnQEbgwy4tcjHJGEzybauLFHwWpihD8Tu2Dw=",
+      "System.Xml.dll": "sha256-a9JHGaQ7cj1CuXS2libTO8D8tZRxlAQBMSAQEh2CkGc=",
+      "System.Xml.Linq.dll": "sha256-sbRXzGJ\/Zg1rQtZrblk2WyEjg\/bJLOjTNNoNBb8uJz4=",
+      "TeleApp.Client.dll": "sha256-LntV\/dqGVKxks6yyNh2uzBvH+BY2sie5YZYF6911snM=",
+      "TeleApp.Shared.dll": "sha256-aMMmi7QmUiEOhWvMVyyjSyZoHb4kSDT2Q0rnqbgN48M=",
+      "Telerik.Blazor.dll": "sha256-pDCMRlY6vqJCMbJGUs+5lLPCtoy0jeW8+nTLoAnXPmM=",
+      "Telerik.DataSource.dll": "sha256-3aNIjT9erSvGBbokpUqVrjVFQ0QHQtYI96F35ARaT8U=",
+      "Telerik.Documents.SpreadsheetStreaming.dll": "sha256-Lu2Hg\/3y0GuhdTBvmUkPMNL5z6g8rXti7bESTkgsOMU=",
+      "Telerik.Recurrence.dll": "sha256-2USychrFjp5wGkWnvD1H+2DE9Gqm\/txs5t21ETkw0sU=",
+      "Telerik.Zip.dll": "sha256-Ol4zuZpxaLdqnHJCn+mNkwCPfHexpGv\/NZioUOeXZAU=",
+      "Toolbelt.Blazor.HttpClientInterceptor.dll": "sha256-LCGrtnYjQrSUj3+LeYLi6C7IgztuTHVq4qavf7WP1g4=",
+      "Toolbelt.Blazor.LoadingBar.dll": "sha256-chOY7sjAaYiQaL4u2fU9MFn\/4SGvEy\/v5KzdaBrT1Hw=",
+      "WebAssembly.Bindings.dll": "sha256-\/hHIz\/jdkN8Q55DllVEE5nSQ5UeooMsZgjo0jl3nzcY="
+    },
+    "pdb": null,
+    "runtime": {
+      "dotnet.3.2.0.js": "sha256-mPoqx7XczFHBWk3gRNn0hc9ekG1OvkKY4XiKRY5Mj5U=",
+      "dotnet.timezones.dat": "sha256-3S0qzYaBEKOBXarzVLNzNAFXlwJr6nI3lFlYUpQTPH8=",
+      "dotnet.wasm": "sha256-UC\/3Rm1NkdNdlIrzYARo+dO\/HDlS5mhPxo0IQv7kma8="
+    },
+    "satelliteResources": {
+      "en": {
+        "en\/TeleApp.Shared.resources.dll": "sha256-L7Q89uPHpiVTHSpOIrUIfsnJkDTFlkidVZyEXGO1RTA="
+      },
+      "vi": {
+        "vi\/TeleApp.Shared.resources.dll": "sha256-DAk5ccH\/+dJQ9wJJm8SM7WlLIFokuC1AKWNhDfFB4Es="
+      }
+    }
+  }
+}

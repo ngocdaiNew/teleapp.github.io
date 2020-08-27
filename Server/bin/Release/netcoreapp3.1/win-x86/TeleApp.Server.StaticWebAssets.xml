@@ -1,0 +1,6 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="C:\Users\ngocd\source\repos\TeleApp\Client\wwwroot\" />
+  <ContentRoot BasePath="/" Path="C:\Users\ngocd\source\repos\TeleApp\Client\bin\Release\netstandard2.1\wwwroot\" />
+  <ContentRoot BasePath="_content/Telerik.UI.for.Blazor" Path="C:\Users\ngocd\.nuget\packages\telerik.ui.for.blazor\2.15.0\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Toolbelt.Blazor.LoadingBar" Path="C:\Users\ngocd\.nuget\packages\toolbelt.blazor.loadingbar\12.0.1\build\..\staticwebassets\" />
+</StaticWebAssets>

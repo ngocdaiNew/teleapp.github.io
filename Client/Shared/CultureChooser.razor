@@ -1,0 +1,39 @@
+﻿@using Microsoft.JSInterop
+@using System.Globalization
+
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<div>
+    <strong>Ngôn ngữ: </strong>
+    <select @bind="Culture">
+        @foreach (var culture in SupportedCultures)
+        {
+            <option value="@culture">@culture.Name</option>
+        }
+    </select>
+</div>
+
+@code{
+    private protected readonly CultureInfo[] SupportedCultures = new[]
+       {
+            new CultureInfo("en"),
+            new CultureInfo("vi")
+        };
+
+    // based on https://github.com/pranavkm/LocSample
+    private protected CultureInfo Culture
+    {
+        get => CultureInfo.CurrentUICulture;
+        set
+        {
+            if (CultureInfo.CurrentUICulture != value)
+            {
+                var jsRuntime = (IJSInProcessRuntime)JSRuntime;
+                jsRuntime.InvokeVoid("blazorCulture.set", value.Name);
+
+                NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+            }
+        }
+    }
+}

@@ -1,0 +1,333 @@
+﻿@page "/"
+@page "/{paramproject}/{paramphone}"
+@using Microsoft.Extensions.Primitives;
+@using System.Globalization;
+@using System.Threading;
+@using System.Collections.ObjectModel;
+@using Faso.Blazor.SpinKit;
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@using TeleApp.Shared
+@using TeleApp.Shared.Resources
+@using Telerik.Blazor.Services
+@* You can use the service for Telerik localization for your own code as well - for example the grid command buttons *@
+@inject ITelerikStringLocalizer Localizer
+@inject IJSRuntime JSRuntime
+
+
+<TelerikGrid ScrollMode="@GridScrollMode.Scrollable" FilterMode="@GridFilterMode.None" Data="@_resultGrid.listLogfiles" Pageable="true" PageSize="PageSize" Page="1" Height="680px">
+    <GridToolBar>
+        <TelerikTextBox Id="BoxTimTheoSDTLogfile" PlaceHolder="Số máy gọi đến..." @bind-Value="valueSearch" OnChange="@ChangeTimSdtHandler"></TelerikTextBox>
+        <TelerikDropDownList PopupHeight="170px" PopupWidth="11%" Id="dropdownListDuAn" Width="174px" Data="@dataSelectDuAn" DefaultText="Dự án" TextField="DisplayText" ValueField="ValueText" Value="@selectDuAnTerm" ValueChanged="@( (string v) => SelectDuAnChangeHandler(v) )">
+        </TelerikDropDownList>
+        <TelerikComboBox PopupHeight="170px" PopupWidth="12%" Width="174px" Data="@dataSelectTaiKhoan" @bind-Value="valueComboTaikhoan" TextField="DisplayText" ValueField="ValueText" OnChange="@((object value) => OnChangeComboSelectTaiKhoanHandler(value))"
+                         FilterOperator="@filterOperator" Placeholder="Tài khoản..." ClearButton="true" Filterable="true" AllowCustom="true">
+            <ItemTemplate>
+                <strong>@((context as SelectModel).DisplayText)</strong>
+            </ItemTemplate>
+        </TelerikComboBox>
+        <TelerikDropDownList PopupHeight="140px" PopupWidth="11%" Width="174px" Data="@dataSelectLoaiCuocGoi" DefaultText="Loại cuộc gọi" TextField="DisplayText" ValueField="ValueText" ValueChanged="@( (string v) => SelectLoaiCuocGoiChangeHandler(v) )">
+        </TelerikDropDownList>
+        <TelerikDateRangePicker StartValue="@StartDateValue"
+                                EndValue="@EndDateValue" Format="dd/MM/yyyy" StartValueChanged="@( (DateTime? sV) => StartValueChangedHandler(sV) )"
+                                EndValueChanged="@( (DateTime? eV) => EndValueChangedHandler(eV) )">
+        </TelerikDateRangePicker>
+    </GridToolBar>
+    <GridColumns>
+        @*@if (showSpinLoadingDataGrid)
+            {
+                <div class="spinner-container">
+                    <SpinKitCircle />
+                </div>
+            }
+            else
+            {
+
+            }*@
+        <GridColumn Field="@(nameof(LogfileModel.CreateTime))" Title="Ngày">
+            <Template>
+                @{
+                    var logfile = context as LogfileModel;
+                    <span>@GridUtil.ConvertNgay(logfile.CreateTime)</span>
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Width="170px" Field="@(nameof(LogfileModel.CreateTime))" Title="Cách đây">
+            <Template>
+                @{
+                    var logfile = context as LogfileModel;
+                    <span>@GridUtil.ConvertDistanceTimeFromNow(logfile.CreateTime)</span>
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Width="120px" Field="@(nameof(LogfileModel.Type))" Title="Loại cuộc gọi">
+            <Template>
+                @{
+                    var logfile = context as LogfileModel;
+                    <span class="@GridUtil.GetClassTypeCall(logfile.Type)">@GridUtil.ConvertTypeCall(logfile.Type)</span>
+                    if (logfile.Type == 3)
+                    {
+                        <span class="@GridUtil.GetClassTypeCall(logfile.Type)">(*)</span>
+                    }
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Width="150px" Field="@(nameof(LogfileModel.Phone))" Title="Số máy gọi đến">
+            <Template>
+                @{
+                    var logfile = context as LogfileModel;
+                    <span class="">@GridUtil.phoneFormat(logfile.Phone)</span>
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Field="@(nameof(LogfileModel.PhoneReceiver))" Title="Số máy nhận">
+            <Template>
+                @{
+                    var logfile = context as LogfileModel;
+                    <span class="spancallout">@GridUtil.phoneFormat(logfile.PhoneReceiver)</span>
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Field="@(nameof(LogfileModel.DurationTime))" Title="Time đàm thoại">
+            <Template>
+                @{
+                    var logfile = context as LogfileModel;
+                    var uriRecore = "http://teleapi.hvnet.vn/uploads/records/" + logfile.RecordFile;
+                    if (!string.IsNullOrEmpty(logfile.RecordFile))
+                    {
+                        <div style="padding: 3px;">
+                            <a style="cursor: pointer;" onclick="window.open('@uriRecore','framemaster','width=900,height=300,scrollbars=yes,resizable=yes');">
+                                <img src="/images/icon-play.png" style="margin-left:10px" />
+                            </a>&nbsp;
+                            <span>@GridUtil.ConvertDurationTimeToString(logfile.DurationTime)</span>
+                        </div>
+                    }
+                }
+            </Template>
+        </GridColumn>
+        <GridColumn Width="200px" Field="@(nameof(LogfileModel.Project))" Title="Dự án"></GridColumn>
+        <GridColumn Field="@(nameof(LogfileModel.Staff))" Title="Tài khoản"></GridColumn>
+    </GridColumns>
+</TelerikGrid>
+<TelerikPager Total="@_resultGrid.pageSize" PageSize="@PageSize" Page="@Page"
+              PageChanged="@( (int page) => PageChangedHandler(page)  )">
+</TelerikPager>
+
+@code {
+    private ResultGridLogfile _resultGrid = new ResultGridLogfile();
+    private ResultGridLogfile _resultGridNoFilterSearch = new ResultGridLogfile();
+    string valueSearch { get; set; } = "";
+    object valueSearchChild { get; set; } = "";
+    string valueComboTaikhoan { get; set; } = "";
+    //Tạo ra biến này để tránh cho khung search quá nhạy
+    object valueComboTaikhoanChild { get; set; } = null;
+    StringFilterOperator filterOperator { get; set; } = StringFilterOperator.Contains;
+    private int selectclick = 0;
+
+    //custom
+    private int PageSize { get; set; } = 50;
+    private int Page { get; set; } = 1; // the page indexes are 1-based
+
+    //params select
+    List<SelectModel> dataSelectDuAn { get; set; } = new List<SelectModel>();
+    List<SelectModel> dataSelectTaiKhoan { get; set; } = new List<SelectModel>();
+    List<SelectModel> dataSelectLoaiCuocGoi { get; set; } = new List<SelectModel>();
+    private string selectDuAnTerm { get; set; } = "";
+    //private string selectTaiKhoanTerm { get; set; } = "";
+    private string selectLoaiCuocGoiTerm { get; set; } = "";
+    private DateTime? StartDateValue { get; set; } = DateTime.Now.AddDays(-90);
+    private DateTime? EndDateValue { get; set; } = DateTime.Now;
+    private string StartDateStr { get; set; } = "";
+    private string EndDateStr { get; set; } = "";
+    //end params select
+    //params from another page
+    [Parameter]
+    public string Paramproject { get; set; }
+    [Parameter]
+    public string Paramphone { get; set; }
+    //end
+    //bool showSpinLoadingDataGrid { get; set; } = false;
+
+    async Task PageChangedHandler(int page)
+    {
+        Page = page;
+        //cập nhật lại database
+        await GetMemberFilter(Page, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+    }
+    private async Task ChangeTimSdtHandler(object theUserInput)
+    {
+        if (valueSearchChild == theUserInput) return;
+        string valueSearchNew = "";
+        if (theUserInput == null || theUserInput == "")
+        {
+            valueSearchNew = "";
+        }
+        else
+        {
+            valueSearchNew = theUserInput.ToString();
+        }
+        valueSearch = valueSearchNew;
+        valueSearchChild = valueSearch;
+
+        await GetMemberFilter(1, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+        Page = 1;
+    }
+    //async Task ComboSelectTaiKhoanChange(string theUserChoice)
+    //{
+    //    if(string.IsNullOrEmpty(theUserChoice))
+    //    {
+    //        Console.WriteLine("ComboSelectTaiKhoanChange ");
+    //    }
+    //    //if (string.IsNullOrEmpty(theUserChoice.ToString()))
+    //    //{
+    //    //    //await GetMemberFilter(1, "", "");
+    //    //    Page = 1;
+
+    //    //}
+    //}
+    async Task OnChangeComboSelectTaiKhoanHandler(object theUserInput)
+    {
+        if (valueComboTaikhoanChild == theUserInput) return;
+        string valueComboNew = "";
+        if (theUserInput == null || theUserInput == "")
+        {
+            valueComboNew = "";
+        }
+        else
+        {
+            valueComboNew = theUserInput.ToString();
+        }
+        valueComboTaikhoan = valueComboNew;
+        valueComboTaikhoanChild = valueComboTaikhoan;
+        await GetMemberFilter(1, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+        Page = 1;
+    }
+    async Task StartValueChangedHandler(DateTime? currStart)
+    {
+        StartDateValue = currStart;
+        StartDateStr = GridUtil.UnixMiliSecondFromDateTime(StartDateValue.GetValueOrDefault());
+    }
+
+    async Task EndValueChangedHandler(DateTime? currEnd)
+    {
+        // you have to update the model manually because handling the <Parameter>Changed event does not let you use @bind-<Parameter>
+        // not updating the model will effectively cancel the event
+        EndDateValue = currEnd;
+        EndDateStr = GridUtil.UnixMiliSecondFromDateTime(EndDateValue.GetValueOrDefault().AddDays(1));
+        await GetMemberFilter(1, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+        Page = 1;
+    }
+    async Task SelectDuAnChangeHandler(string theUserInput)
+    {
+        if (selectDuAnTerm == theUserInput)
+        {
+            return;
+        }
+        selectDuAnTerm = theUserInput;
+        await GetMemberFilter(1, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+        Page = 1;
+    }
+    async Task SelectLoaiCuocGoiChangeHandler(string selectVal)
+    {
+        if (selectLoaiCuocGoiTerm == selectVal)
+        {
+            return;
+        }
+        selectLoaiCuocGoiTerm = selectVal;
+        await GetMemberFilter(1, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+        Page = 1;
+    }
+    //private async Task GetSelectValBeforeParameterSet()
+    //{
+    //    List<SelectModel> listSelectModelDuan = new List<SelectModel>();
+    //    List<SelectModel> listSelectModelLoaiCuocGoi = new List<SelectModel>();
+    //    List<SelectModel> listSelectModelTaiKhoan = new List<SelectModel>();
+    //    var getdataSelect = await Http.GetFromJsonAsync<ListColumnSelectModel>("Logfile/GetLogfileSelect");
+    //    getdataSelect.ListProject.ForEach(d => listSelectModelDuan.Add(new SelectModel() { DisplayText = d, ValueText = d }));
+    //    getdataSelect.ListType.ForEach(d => listSelectModelLoaiCuocGoi.Add(new SelectModel() { DisplayText = GridUtil.ConvertTypeCall(d), ValueText = d.ToString() }));
+    //    getdataSelect.ListStaff.ForEach(d => listSelectModelTaiKhoan.Add(new SelectModel() { DisplayText = d, ValueText = d }));
+
+    //    dataSelectDuAn = new ObservableCollection<SelectModel>(listSelectModelDuan);
+    //    dataSelectLoaiCuocGoi = new ObservableCollection<SelectModel>(listSelectModelLoaiCuocGoi);
+    //    dataSelectTaiKhoan = new ObservableCollection<SelectModel>(listSelectModelTaiKhoan);
+    //}
+    private async Task GetSelectValBeforeParameterSet()
+    {
+        List<SelectModel> listSelectModelDuan = new List<SelectModel>();
+        List<SelectModel> listSelectModelLoaiCuocGoi = new List<SelectModel>();
+        List<SelectModel> listSelectModelTaiKhoan = new List<SelectModel>();
+        try
+        {
+            //Http.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+            var getdataSelect = await Http.GetFromJsonAsync<ListColumnSelectModel>("Logfile/GetLogfileSelect");
+
+            getdataSelect.ListProject.ForEach(d => listSelectModelDuan.Add(new SelectModel() { DisplayText = d, ValueText = d }));
+            getdataSelect.ListType.ForEach(d => listSelectModelLoaiCuocGoi.Add(new SelectModel() { DisplayText = GridUtil.ConvertTypeCall(d), ValueText = d.ToString() }));
+            getdataSelect.ListStaff.ForEach(d => listSelectModelTaiKhoan.Add(new SelectModel() { DisplayText = d, ValueText = d }));
+
+            dataSelectDuAn = listSelectModelDuan;
+            dataSelectLoaiCuocGoi = listSelectModelLoaiCuocGoi;
+            dataSelectTaiKhoan = listSelectModelTaiKhoan;
+            selectDuAnTerm = "portal.hvnet.vn";
+            if (!string.IsNullOrEmpty(Paramproject)) selectDuAnTerm = Paramproject;
+            if (!string.IsNullOrEmpty(Paramphone)) valueSearch = Paramphone;
+
+            StartDateStr = GridUtil.UnixMiliSecondFromDateTime(StartDateValue.GetValueOrDefault());
+            EndDateStr = GridUtil.UnixMiliSecondFromDateTime(EndDateValue.GetValueOrDefault());
+
+            await JSRuntime.InvokeVoidAsync("changelanguage");
+            await GetMemberFilter(1, "", valueSearch, selectDuAnTerm, selectLoaiCuocGoiTerm, valueComboTaikhoan, StartDateStr, EndDateStr);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+    }
+    private async Task GetMemberFilter(int trang, string termsdt, string termsearch, string termduan, string termcalltype, string termtaikhoan, string termstartdate, string termenddate)
+    {
+        if (termsdt == "null") termsdt = "";
+        var jsonstringA = await Http.GetAsync("Logfile/GetPageFilter/" + trang + "/termsearch=" + GridUtil.FilterStringUnicode(termsearch) + "/" + PageSize + "/termduan=" + termduan + "/termcalltype=" + termcalltype + "/termtaikhoan=" + termtaikhoan + "/startdate=" + termstartdate + "/enddate=" + termenddate);
+        if ((int)jsonstringA.StatusCode != 204)
+        {
+            var jsonstring = await jsonstringA.Content.ReadAsStringAsync();
+            _resultGrid = JsonConvert.DeserializeObject<ResultGridLogfile>(jsonstring);
+
+            if (_resultGridNoFilterSearch.listLogfiles == null)
+            {
+                _resultGridNoFilterSearch.listLogfiles = new List<LogfileModel>();
+                _resultGridNoFilterSearch.listLogfiles.Add(new LogfileModel { Staff = "", Phone = "" });
+                _resultGrid.listLogfiles.ForEach(m => _resultGridNoFilterSearch.listLogfiles.Add(m));
+                _resultGridNoFilterSearch.pageSize = _resultGrid.pageSize;
+            }
+        }
+        else
+        {
+            _resultGrid = new ResultGridLogfile();
+            _resultGrid.listLogfiles = new List<LogfileModel>();
+        }
+    }
+    //public override async Task SetParametersAsync(ParameterView parameters)
+    //{
+    //    //await ...
+    //    await base.SetParametersAsync(parameters);
+    //}
+    protected override async Task OnInitializedAsync()
+    {
+        _resultGrid.listLogfiles = new List<LogfileModel>();
+        await GetSelectValBeforeParameterSet();
+    }
+    //sự kiện thay đổi giao diện trên màn hình, hay thay đổi dữ liệu bind đều chạy vào hàm này trước.
+    //protected override bool ShouldRender()
+    //{
+    //    selectclick++;
+    //    if (selectclick == 2 || string.IsNullOrEmpty(selectSexTerm))
+    //    {
+    //        selectclick = 0;
+    //    }
+    //    else
+    //    {
+    //    }
+    //    return true;
+    //}
+}

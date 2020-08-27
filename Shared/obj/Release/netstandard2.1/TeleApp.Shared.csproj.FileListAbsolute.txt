@@ -1,0 +1,16 @@
+C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Release\netstandard2.1\TeleApp.Shared.deps.json
+C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Release\netstandard2.1\TeleApp.Shared.dll
+C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Release\netstandard2.1\TeleApp.Shared.pdb
+C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Release\netstandard2.1\en\TeleApp.Shared.resources.dll
+C:\Users\ngocd\source\repos\TeleApp\Shared\bin\Release\netstandard2.1\vi\TeleApp.Shared.resources.dll
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.Resources.TelerikResource.resources
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.Resources.TelerikResource.en.resources
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.Resources.TelerikResource.vi.resources
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.csproj.GenerateResource.cache
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.AssemblyInfoInputs.cache
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.AssemblyInfo.cs
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\en\TeleApp.Shared.resources.dll
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\vi\TeleApp.Shared.resources.dll
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.dll
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.pdb
+C:\Users\ngocd\source\repos\TeleApp\Shared\obj\Release\netstandard2.1\TeleApp.Shared.csprojAssemblyReference.cache

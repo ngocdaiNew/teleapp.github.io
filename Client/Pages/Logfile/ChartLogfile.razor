@@ -1,0 +1,74 @@
+﻿@page "/logfile/chart"
+@using TeleApp.Shared
+@using TeleApp.Services
+@inject WeatherForecastService ForecastService
+
+<div class="container-fluid">
+    <div class='row my-4'>
+        <div class='col-12 col-lg-9 border-right'>
+            @if (forecasts?.Count > 0)
+            {
+                <TelerikChart>
+                    <ChartCategoryAxes>
+                        <ChartCategoryAxis BaseUnit="@ChartCategoryAxisBaseUnit.Weeks" Type="@ChartCategoryAxisType.Date">
+                            <ChartCategoryAxisLabels Format="{0:dd MMM}" />
+                        </ChartCategoryAxis>
+                    </ChartCategoryAxes>
+
+                    <ChartSeriesItems>
+                        <ChartSeries Type="@ChartSeriesType.Line" Name="High" Color="red"
+                                     Data="@forecasts"
+                                     Field="@nameof(WeatherForecast.TemperatureF)"
+                                     CategoryField="@nameof(WeatherForecast.Date)"
+                                     Aggregate="@ChartSeriesAggregate.Max">
+                            <ChartSeriesLabels Visible="true" Template="#=dataItem.Summary#" />
+                        </ChartSeries>
+
+                        <ChartSeries Type="@ChartSeriesType.Line" Name="Low" Color="blue"
+                                     Data="@forecasts"
+                                     Field="@nameof(WeatherForecast.TemperatureF)"
+                                     CategoryField="@nameof(WeatherForecast.Date)"
+                                     Aggregate="@ChartSeriesAggregate.Min">
+                            <ChartSeriesLabels Visible="true" Template="#=dataItem.Summary#" />
+                        </ChartSeries>
+                    </ChartSeriesItems>
+
+                    <ChartValueAxes>
+                        <ChartValueAxis AxisCrossingValue="new object[] { -50 }">
+                            <ChartValueAxisLabels Format="{0} F"></ChartValueAxisLabels>
+                        </ChartValueAxis>
+                    </ChartValueAxes>
+
+                    <ChartTitle Text="Min and Max temperatures for the upcoming weeks"></ChartTitle>
+                </TelerikChart>
+            }
+            else
+            {
+                <div class="alert alert-info">No data available.</div>
+            }
+        </div>
+        <div class='col-12 col-lg-3 mt-3 mt-lg-0'>
+            <TelerikGrid ScrollMode="@GridScrollMode.Scrollable" FilterMode="@GridFilterMode.None" Data="@forecasts" Pageable="true" PageSize="10" Page="1" Height="400px">
+                <GridToolBar>
+                    <TelerikDropDownList Width="174px" Data="@forecasts" DefaultText="Dự án" TextField="DisplayText" ValueField="ValueText" Value="@selectDuAnTerm">
+                    </TelerikDropDownList>
+                </GridToolBar>
+                <GridColumns>
+                </GridColumns>
+            </TelerikGrid>
+        </div>
+    </div>
+</div>
+
+@code{
+    public string selectDuAnTerm { get; set; }
+    List<WeatherForecast> forecasts { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        DateTime currDate = DateTime.Now.Date;
+        var allForecasts = await ForecastService.GetForecastListAsync(currDate);
+        // use only dates within the last month as a reasonable range of data considering the BaseUnit
+        forecasts = allForecasts.Where(f => currDate.Subtract(f.Date.Date) < new TimeSpan(30, 0, 0, 0)).ToList();
+    }
+}
